@@ -62,6 +62,9 @@ class Github(object):
         stable_branches = [clean_branch_version(branch) for branch in branches if
                            (branch.startswith("stable/") or branch.startswith("release/")) and
                            "master" not in branch]
+        if not stable_branches:
+            stable_branches = [clean_branch_version(branch) for branch in branches if
+                               branch.startswith("testing/")]
         for branch in stable_branches:
             version = self.extract_branch_version(branch)
             stable_version = self.extract_branch_version(stable_branch)
