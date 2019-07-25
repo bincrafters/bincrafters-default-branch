@@ -1,0 +1,10 @@
+os: linux
+distro: xenial
+language: python
+python: '3.7'
+
+install:
+- pip install -q -r requirements.txt
+
+script:
+- python bincrafters_default_branch.py
