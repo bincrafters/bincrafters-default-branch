@@ -50,7 +50,7 @@ class Github(object):
     def extract_branch_version(self, branch):
         if not branch:
             return "0.0.0"
-        return branch[branch.find('/') + 1:]
+        return branch[branch.find('/') + 1:] if '/' in branch else branch
 
     def get_stable_branch(self, branches):
         def clean_branch_version(branch):
@@ -83,7 +83,7 @@ class Github(object):
         name, default_branch = repository
 
         print("Repository {} has been using '{}' as default branch".format(name, default_branch))
-        branches = self.get_repo_branches(name)
+        branches = self.get_repo_branches(name) or [default_branch]
         new_default_branch = self.get_stable_branch(branches)
         if default_branch != new_default_branch:
             print("Repository {} will be updated to {}".format(name, new_default_branch))
