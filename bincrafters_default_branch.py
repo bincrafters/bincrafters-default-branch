@@ -24,10 +24,12 @@ class Github(object):
         params = {"per_page": Github.GITHUB_PER_PAGE}
         url = "{}/orgs/{}/repos".format(Github.GITHUB_API_URL, org)
         response = requests.get(url, auth=self._auth, params=params)
-        link = response.headers["Link"].split(',')[1]
-        filter = re.search(r"page=(\d+)>", link)
-        if filter:
-            return int(filter.group(1))
+        response.raise_for_status()
+        if "Link" in response.headers:
+            link = response.headers["Link"].split(',')[1]
+            filter = re.search(r"page=(\d+)>", link)
+            if filter:
+                return int(filter.group(1))
         return 1
 
     def get_repo_list(self):
@@ -38,6 +40,7 @@ class Github(object):
             params = {"per_page": Github.GITHUB_PER_PAGE, "page": page}
             url = "{}/orgs/{}/repos".format(Github.GITHUB_API_URL, self.organization)
             response = requests.get(url, auth=self._auth, params=params)
+            response.raise_for_status()
             json_data.extend([(it.get("name"), it.get("default_branch")) for it in response.json()])
             page += 1
         return json_data
@@ -45,6 +48,7 @@ class Github(object):
     def get_repo_branches(self, repository):
         url = "{}/repos/{}/{}/branches".format(Github.GITHUB_API_URL, self.organization, repository)
         response = requests.get(url, auth=self._auth)
+        response.raise_for_status()
         return [it.get("name") for it in response.json()]
 
     def extract_branch_version(self, branch):
