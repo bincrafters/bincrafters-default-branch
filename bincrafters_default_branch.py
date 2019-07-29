@@ -56,7 +56,7 @@ class Github(object):
             return "0.0.0"
         return branch[branch.find('/') + 1:] if '/' in branch else branch
 
-    def get_stable_branch(self, branches):
+    def get_default_branch(self, branches):
         def clean_branch_version(branch):
             if "_" in branch:
                 branch = branch[:branch.find("_")]
@@ -64,11 +64,12 @@ class Github(object):
 
         stable_branch = None
         stable_branches = [clean_branch_version(branch) for branch in branches if
-                           (branch.startswith("stable/") or branch.startswith("release/")) and
-                           "master" not in branch]
+                               branch.startswith("testing/")]
         if not stable_branches:
             stable_branches = [clean_branch_version(branch) for branch in branches if
-                               branch.startswith("testing/")]
+                            (branch.startswith("stable/") or branch.startswith("release/")) and
+                            "master" not in branch]
+
         for branch in stable_branches:
             version = self.extract_branch_version(branch)
             stable_version = self.extract_branch_version(stable_branch)
@@ -91,7 +92,7 @@ class Github(object):
 
         print("Repository {} has been using '{}' as default branch".format(name, default_branch))
         branches = self.get_repo_branches(name) or [default_branch]
-        new_default_branch = self.get_stable_branch(branches)
+        new_default_branch = self.get_default_branch(branches)
         if default_branch != new_default_branch:
             print("Repository {} will be updated to {}".format(name, new_default_branch))
             self.set_default_branch(name, new_default_branch)
