@@ -7,7 +7,7 @@
 #### About
 
 This script was created with the intention to update all Bincrafters projects to use the
-latest stable branch available in each project.
+latest **testing** branch available in each project.
 
 #### Running
 
