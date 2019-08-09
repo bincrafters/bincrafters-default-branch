@@ -41,7 +41,7 @@ class Github(object):
             url = "{}/orgs/{}/repos".format(Github.GITHUB_API_URL, self.organization)
             response = requests.get(url, auth=self._auth, params=params)
             response.raise_for_status()
-            json_data.extend([(it.get("name"), it.get("default_branch")) for it in response.json()])
+            json_data.extend([(it.get("name"), it.get("default_branch")) for it in response.json() if it.get("name").startswith("conan-")])
             page += 1
         return json_data
 
@@ -106,7 +106,7 @@ if __name__ == "__main__":
     print("=== BINCRAFTERS - UPDATE DEFAULT BRANCH ===")
     print("Collecting repositories for the organization {}".format(github.organization))
     repositories = github.get_repo_list()
-    print("Found {} repositories".format(len(repositories)))
+    print("Found {} Conan repositories".format(len(repositories)))
     for repo in repositories:
         try:
             print("\nChecking default branch for {}/{}".format(github.organization, repo[0]))
