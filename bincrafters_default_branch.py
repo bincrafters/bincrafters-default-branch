@@ -49,7 +49,14 @@ class Github(object):
         url = "{}/repos/{}/{}/branches".format(Github.GITHUB_API_URL, self.organization, repository)
         response = requests.get(url, auth=self._auth)
         response.raise_for_status()
-        return [it.get("name") for it in response.json()]
+        result = []
+        result.extend(it.get("name") for it in response.json())
+        while "next" in response.links:
+            url = response.links["next"]["url"]
+            response = requests.get(url, auth=self._auth)
+            response.raise_for_status()
+            result.extend(it.get("name") for it in response.json())
+        return result
 
     def extract_branch_version(self, branch):
         if not branch:
