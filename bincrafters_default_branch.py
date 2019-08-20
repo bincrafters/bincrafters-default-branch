@@ -41,7 +41,12 @@ class Github(object):
             url = "{}/orgs/{}/repos".format(Github.GITHUB_API_URL, self.organization)
             response = requests.get(url, auth=self._auth, params=params)
             response.raise_for_status()
-            json_data.extend([(it.get("name"), it.get("default_branch")) for it in response.json() if it.get("name").startswith("conan-")])
+            for it in response.json():
+                if (it.get("name").startswith("conan-")
+                    and not it["archived"] 
+                    and not it["fork"] 
+                    and not it["disabled"]):
+                        json_data.extend([(it.get("name"), it.get("default_branch"))])
             page += 1
         return json_data
 
