@@ -8,7 +8,6 @@ deprecation==2.0.6
 distro==1.1.0
 fasteners==0.15
 future==0.16.0
-get==2019.4.13
 idna==2.8
 isort==4.3.21
 Jinja2==2.10.1
@@ -36,3 +35,7 @@ tqdm==4.32.2
 typed-ast==1.4.0
 urllib3==1.25.3
 wrapt==1.11.2
+
+# get==2019.4.13 
+# this package got deleted on PyPi in 2020-07
+# we don't seem to need it?
