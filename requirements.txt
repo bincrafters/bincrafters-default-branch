@@ -27,7 +27,7 @@ pyparsing==2.4.1.1
 python-dateutil==2.8.0
 PyYAML==5.1.1
 query-string==2019.4.13
-request==2019.4.13
+
 requests==2.22.0
 six==1.12.0
 tqdm==4.32.2
@@ -37,5 +37,6 @@ wrapt==1.11.2
 
 # get==2019.4.13 
 # post==2019.4.13
+# request==2019.4.13
 # Those package got deleted on PyPi in 2020-07
 # We don't seem to need it?
