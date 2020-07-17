@@ -19,7 +19,6 @@ node-semver==0.6.1
 packaging==19.0
 patch==1.16
 pluginbase==0.7
-post==2019.4.13
 public==2019.4.13
 Pygments==2.4.2
 PyJWT==1.7.1
@@ -37,5 +36,6 @@ urllib3==1.25.3
 wrapt==1.11.2
 
 # get==2019.4.13 
-# this package got deleted on PyPi in 2020-07
-# we don't seem to need it?
+# post==2019.4.13
+# Those package got deleted on PyPi in 2020-07
+# We don't seem to need it?
