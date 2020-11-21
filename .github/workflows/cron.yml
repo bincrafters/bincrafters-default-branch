@@ -1,0 +1,23 @@
+on:
+  push:
+  schedule:
+    - cron: "0 11,23 * * *"
+
+name: "update default branches"
+
+jobs:
+  update-default-branches:
+    name: "Update default branches for Bincrafters"
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v1
+      with:
+        python-version: "3.8"
+    - name: "Update branches"
+      env:
+        GITHUB_USERNAME: ${{ secrets.BOT_GITHUB_NAME }}
+        GITHUB_API_KEY: ${{ secrets.BOT_GITHUB_TOKEN }}
+      run: |
+        pip install -q -r requirements.txt
+        python bincrafters_default_branch.py
